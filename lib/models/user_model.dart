@@ -1,14 +1,25 @@
-// models/user_model.dart
 class User {
   final String id;
-  final String name;
   final String email;
-  final String type; // 'client' ou 'supplier'
+  final String? nome;
+  final String? celular;
+  final String? nuit;
 
   User({
     required this.id,
-    required this.name,
     required this.email,
-    required this.type,
+    this.nome,
+    this.celular,
+    this.nuit,
   });
+
+  factory User.fromMap(Map<String, dynamic> map) {
+    return User(
+      id: map['id'] ?? '',
+      email: map['email'] ?? '',
+      nome: map['nome'],
+      celular: map['celular'],
+      nuit: map['nuit'],
+    );
+  }
 }

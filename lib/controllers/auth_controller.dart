@@ -1,18 +1,34 @@
 // controllers/auth_controller.dart
 import 'package:flutter/material.dart';
 import 'package:greennovo/models/user_model.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class AuthController extends ChangeNotifier {
   User? _currentUser;
 
   User? get currentUser => _currentUser;
   bool get isLoggedIn => _currentUser != null;
-  bool get isClient => _currentUser?.type == 'client';
-  bool get isSupplier => _currentUser?.type == 'supplier';
 
-  void login(User user) {
-    _currentUser = user;
-    notifyListeners();
+  Future<void> login(String email, String password) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://10.0.2.2:3702/api/login'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({'email': email, 'password': password}),
+      );
+
+      final responseData = json.decode(response.body);
+
+      if (response.statusCode == 200) {
+        _currentUser = User.fromMap(responseData['user']);
+        notifyListeners();
+      } else {
+        throw Exception(responseData['error'] ?? 'Erro no login');
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 
   void logout() {

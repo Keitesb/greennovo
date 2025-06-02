@@ -1,9 +1,7 @@
 // views/auth/login_screen.dart
 import 'package:flutter/material.dart';
-import 'package:greennovo/views/main_app_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:greennovo/controllers/auth_controller.dart';
-import 'package:greennovo/models/user_model.dart';
 
 class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -75,24 +73,24 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    // Simulando login bem-sucedido
-                    final user = User(
-                      id: '1234',
-                      name: 'Keite',
-                      email: _emailController.text,
-                      type: _userType.value,
-                    );
-                    authController.login(user);
-
-                    // Navega para a tela principal apropriada
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MainAppScreen(),
-                      ),
-                    );
-                  }
+                  // if (_formKey.currentState!.validate()) {
+                  //   // Simulando login bem-sucedido
+                  //   final user = User(
+                  //     id: '1234',
+                  //     name: 'Keite',
+                  //     email: _emailController.text,
+                  //     type: _userType.value,
+                  //   );
+                  //   authController.login(user);
+                  //
+                  //   // Navega para a tela principal apropriada
+                  //   Navigator.pushReplacement(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //       builder: (context) => const MainAppScreen(),
+                  //     ),
+                  //   );
+                  // }
                 },
                 child: const Text('Entrar'),
               ),

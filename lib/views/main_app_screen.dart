@@ -13,13 +13,13 @@ class MainAppScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final authController = Provider.of<AuthController>(context);
 
-    if (authController.isClient) {
+    //if (authController.isClient) {
       return const ClientAppScreen();
-    } else if (authController.isSupplier) {
-      return const SupplierAppScreen();
-    } else {
-      // Isso não deve acontecer, pois o MainAppScreen só é chamado após login
-      return const Scaffold(body: Center(child: Text('Erro: Tipo de usuário desconhecido')));
-    }
+    // } else if (authController.isSupplier) {
+    //   return const SupplierAppScreen();
+    // } else {
+    //   // Isso não deve acontecer, pois o MainAppScreen só é chamado após login
+    //   return const Scaffold(body: Center(child: Text('Erro: Tipo de usuário desconhecido')));
+    // }
   }
 }
