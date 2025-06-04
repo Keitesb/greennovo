@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:greennovo/controllers/cart_controller.dart';
+import 'package:greennovo/providers/cart_controller.dart';
 import 'check_out_screen.dart';
 
 class CartScreen extends StatelessWidget {
@@ -90,7 +90,7 @@ class CartScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  'Quantidade: ${item.quantity} ${item.product.unit}',
+                                  'Quantidade: ${item.quantity}',
                                   style: const TextStyle(
                                     color: Colors.black54,
                                   ),
