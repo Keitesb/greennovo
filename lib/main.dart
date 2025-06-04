@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:greennovo/views/splash/splash_screen.dart';
+import 'package:greennovo/views/utils/custom_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:greennovo/controllers/auth_controller.dart';
 import 'package:greennovo/controllers/cart_controller.dart';
 import 'package:greennovo/controllers/product_controller.dart';
-import 'package:greennovo/views/auth/login.dart';
 import 'package:greennovo/views/main_app_screen.dart';
 
 void main() {
@@ -26,9 +26,18 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'GreenNovo',
         theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: CustomColors.greenMain),
+          scaffoldBackgroundColor: Colors.white.withAlpha(190),
           primarySwatch: Colors.green,
+          primaryColor: Colors.green,
+          appBarTheme: const AppBarTheme(backgroundColor: Colors.green),
+          floatingActionButtonTheme: const FloatingActionButtonThemeData(
+            backgroundColor: Colors.green,
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(backgroundColor: CustomColors.greenMain),
+          ),
         ),
-        // Defina as rotas nomeadas
         routes: {
           '/': (context) => const AuthWrapper(),
           '/main': (context) => const MainAppScreen(),
