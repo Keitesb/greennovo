@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:greennovo/controllers/cart_controller.dart';
+import 'package:greennovo/providers/cart_controller.dart';
 import 'package:intl/intl.dart';
 
 class AskScreen extends StatelessWidget {
@@ -36,7 +36,7 @@ class AskScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           final order = orders[index];
           final formattedDate = DateFormat('dd/MM/yyyy – HH:mm')
-              .format(DateTime.parse(order.date));
+              .format(order.date); // date já é DateTime agora
 
           return Container(
             margin: const EdgeInsets.only(bottom: 16),
@@ -74,7 +74,7 @@ class AskScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
 
-                // Lista de produtos
+                // Lista de produtos (agora usa OrderItem)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: order.items.map((item) {
@@ -85,7 +85,7 @@ class AskScreen extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              item.product.name,
+                              item.name,
                               style: const TextStyle(fontSize: 15),
                             ),
                           ),
@@ -95,7 +95,7 @@ class AskScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            'MZN ${(item.product.price * item.quantity).toStringAsFixed(2)}',
+                            'MZN ${(item.price * item.quantity).toStringAsFixed(2)}',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.green,
@@ -124,7 +124,7 @@ class AskScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(
-                        color: order.status == 'Entregue'
+                        color: order.status.toLowerCase() == 'entregue'
                             ? Colors.green.shade100
                             : Colors.orange.shade100,
                         borderRadius: BorderRadius.circular(20),
@@ -132,7 +132,7 @@ class AskScreen extends StatelessWidget {
                       child: Text(
                         order.status,
                         style: TextStyle(
-                          color: order.status == 'Entregue'
+                          color: order.status.toLowerCase() == 'entregue'
                               ? Colors.green.shade800
                               : Colors.orange.shade800,
                           fontWeight: FontWeight.w600,

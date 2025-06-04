@@ -1,10 +1,10 @@
-// controllers/auth_controller.dart
+// lib/providers/auth_provider.dart
 import 'package:flutter/material.dart';
 import 'package:greennovo/models/user_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class AuthController extends ChangeNotifier {
+class AuthProvider extends ChangeNotifier {
   User? _currentUser;
 
   User? get currentUser => _currentUser;
@@ -31,6 +31,7 @@ class AuthController extends ChangeNotifier {
     }
   }
 
+  /// Faz logout (remove usuário e notifica listeners)
   void logout() {
     _currentUser = null;
     notifyListeners();

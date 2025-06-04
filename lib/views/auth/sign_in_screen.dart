@@ -1,10 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:greennovo/views/auth/sign_in_up.dart';
-import 'package:greennovo/views/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
-import '../../controllers/auth_controller.dart';
 import '../utils/custom_colors.dart';
+import 'package:greennovo/providers/auth_provider.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -26,7 +25,7 @@ class _SignInScreenState extends State<SignInScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final authController = Provider.of<AuthController>(context, listen: false);
+      final authController = Provider.of<AuthProvider>(context, listen: false);
       await authController.login(
         _emailController.text,
         _passwordController.text,
