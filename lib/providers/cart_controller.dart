@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:greennovo/models/cart_item_model.dart';
-import 'package:greennovo/models/order_model.dart';
-import 'package:greennovo/models/product_model.dart';
+import '../models/cart_item_model.dart';
+import '../models/order_model.dart';
+import '../models/order_item_model.dart';
+import '../models/product_model.dart';
+import '../models/user_model.dart';
 
 class CartController extends ChangeNotifier {
   final List<CartItem> _items = [];
@@ -10,26 +12,17 @@ class CartController extends ChangeNotifier {
   List<CartItem> get items => _items;
   List<Order> get orders => _orders;
 
-  /// Total de todos os itens no carrinho
-  double get totalPrice {
-    return _items.fold(0.0, (sum, item) => sum + (item.product.price * item.quantity));
-  }
+  double get totalPrice =>
+      _items.fold(0.0, (sum, item) => sum + (item.product.price * item.quantity));
 
-  /// Itens selecionados para checkout
   List<CartItem> get selectedItems =>
       _items.where((item) => item.isSelected).toList();
 
-  /// Total de apenas os itens selecionados
-  double get selectedItemsTotal {
-    return selectedItems.fold(
-      0.0,
-          (sum, item) => sum + (item.product.price * item.quantity),
-    );
-  }
+  double get selectedItemsTotal =>
+      selectedItems.fold(0.0, (sum, item) => sum + (item.product.price * item.quantity));
 
-  /// Adicionar item ao carrinho
   void addToCart(Product product) {
-    final index = _items.indexWhere((item) => item.product.name == product.name);
+    final index = _items.indexWhere((item) => item.product.id == product.id);
     if (index >= 0) {
       _items[index].quantity++;
     } else {
@@ -38,13 +31,11 @@ class CartController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Aumentar quantidade de um item
   void increaseQuantity(CartItem item) {
     item.quantity++;
     notifyListeners();
   }
 
-  /// Diminuir quantidade (mínimo 1)
   void decreaseQuantity(CartItem item) {
     if (item.quantity > 1) {
       item.quantity--;
@@ -52,40 +43,50 @@ class CartController extends ChangeNotifier {
     }
   }
 
-  /// Remover item do carrinho
   void removeItem(CartItem item) {
     _items.remove(item);
     notifyListeners();
   }
 
-  /// Selecionar ou desselecionar um item
   void toggleItemSelection(int index) {
     _items[index].isSelected = !_items[index].isSelected;
     notifyListeners();
   }
 
   /// Finalizar pedido apenas com itens selecionados
-  void checkout() {
+  /// Agora exige também os campos obrigatórios do Order model
+  void checkout({
+    required User customer,
+    String notes = '',
+    String paymentMethod = 'm-pesa',
+  }) {
     final selected = selectedItems;
-
     if (selected.isEmpty) return;
+
+    final List<OrderItem> orderItems = selected.map((cartItem) {
+      return OrderItem(
+        name: cartItem.product.name,
+        quantity: cartItem.quantity,
+        price: cartItem.product.price,
+      );
+    }).toList();
 
     final newOrder = Order(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
-      date: DateTime.now().toString(),
-      items: List.from(selected),
+      date: DateTime.now(),
+      items: orderItems,
       total: selectedItemsTotal,
-      status: 'Processando',
+      status: 'pending', // Use o status correto do seu fluxo
+      customer: customer,
+      notes: notes,
+      paymentMethod: paymentMethod,
     );
 
     _orders.add(newOrder);
-
-    // Remove apenas os itens selecionados do carrinho
     _items.removeWhere((item) => item.isSelected);
     notifyListeners();
   }
 
-  /// Limpar carrinho inteiro
   void clearCart() {
     _items.clear();
     notifyListeners();

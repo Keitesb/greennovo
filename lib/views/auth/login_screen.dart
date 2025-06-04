@@ -1,8 +1,7 @@
-// views/auth/login_screen.dart
 import 'package:flutter/material.dart';
 import 'package:greennovo/views/main_app_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:greennovo/controllers/auth_controller.dart';
+import 'package:greennovo/providers/auth_provider.dart';
 import 'package:greennovo/models/user_model.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -11,11 +10,15 @@ class LoginScreen extends StatelessWidget {
   final _passwordController = TextEditingController();
   final _userType = ValueNotifier<String>('client');
 
+  // Adicione esses providers para mock address e phone, se quiser inputs reais.
+  // final _addressController = TextEditingController();
+  // final _phoneController = TextEditingController();
+
   LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final authController = Provider.of<AuthController>(context, listen: false);
+    final authController = Provider.of<AuthProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Login')),
@@ -46,6 +49,15 @@ class LoginScreen extends StatelessWidget {
                   return null;
                 },
               ),
+              // Se quiser campos reais para endereço e telefone:
+              // TextFormField(
+              //   controller: _addressController,
+              //   decoration: const InputDecoration(labelText: 'Endereço'),
+              // ),
+              // TextFormField(
+              //   controller: _phoneController,
+              //   decoration: const InputDecoration(labelText: 'Telefone'),
+              // ),
               const SizedBox(height: 20),
               ValueListenableBuilder<String>(
                 valueListenable: _userType,
@@ -82,6 +94,8 @@ class LoginScreen extends StatelessWidget {
                       name: 'Keite',
                       email: _emailController.text,
                       type: _userType.value,
+                      address: 'Endereço Exemplo', // ou _addressController.text
+                      phone: '+258 84 000 0000',   // ou _phoneController.text
                     );
                     authController.login(user);
 
