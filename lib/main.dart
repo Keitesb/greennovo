@@ -9,7 +9,6 @@ import 'package:greennovo/providers/product_controller.dart';
 import 'package:greennovo/views/auth/login_screen.dart';
 import 'package:greennovo/views/main_app_screen.dart';
 import 'package:greennovo/providers/order_provider.dart';
-import 'package:greennovo/providers/auth_provider.dart';
 
 void main() {
   runApp(const MyApp());
