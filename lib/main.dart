@@ -1,12 +1,12 @@
-// main.dart
 import 'package:flutter/material.dart';
+import 'package:greennovo/views/splash/splash_screen.dart';
+import 'package:greennovo/views/utils/custom_colors.dart';
+import 'package:provider/provider.dart';
 import 'package:greennovo/providers/auth_provider.dart';
 import 'package:greennovo/providers/supplier_home_controller.dart';
 import 'package:greennovo/providers/vendor_order_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:greennovo/providers/cart_controller.dart';
 import 'package:greennovo/providers/product_controller.dart';
-import 'package:greennovo/views/auth/login_screen.dart';
 import 'package:greennovo/views/main_app_screen.dart';
 import 'package:greennovo/providers/order_provider.dart';
 
@@ -32,16 +32,37 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'GreenNovo',
         theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: CustomColors.greenMain),
+          scaffoldBackgroundColor: Colors.white.withAlpha(190),
           primarySwatch: Colors.green,
+          primaryColor: Colors.green,
+          appBarTheme: const AppBarTheme(backgroundColor: Colors.green),
+          floatingActionButtonTheme: const FloatingActionButtonThemeData(
+            backgroundColor: Colors.green,
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(backgroundColor: CustomColors.greenMain),
+          ),
         ),
-        home: Consumer<AuthProvider>(
-          builder: (context, authController, child) {
-            return authController.isAuthenticated
-                ? const MainAppScreen()
-                :  LoginScreen();
-          },
-        ),
+        routes: {
+          '/': (context) => const AuthWrapper(),
+          '/main': (context) => const MainAppScreen(),
+          '/splash':(context)=> const SplashScreen()
+        },
       ),
     );
+  }
+}
+
+class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final authController = Provider.of<AuthProvider>(context);
+
+    return authController.isLoggedIn
+        ? const MainAppScreen()
+        : SplashScreen();
   }
 }

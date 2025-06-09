@@ -44,7 +44,7 @@ class OrderProvider extends ChangeNotifier {
   /// Busca pedidos simulados (mock) para o usuário autenticado.
   /// Troque o conteúdo deste método por chamada de API real futuramente.
   Future<void> fetchOrders(AuthProvider auth) async {
-    if (!auth.isAuthenticated) return;
+    if (!auth.isLoggedIn) return;
     if (_isLoading) return;
     _isLoading = true;
     _error = null;
@@ -69,7 +69,7 @@ class OrderProvider extends ChangeNotifier {
               id: '1',
               name: 'Keite Banze',
               email: 'keite@email.com',
-              type: 'client',
+           //   type: 'client',
               address: 'Bairro indígena',
               phone: '+258 84 577 2140',
             ),
@@ -88,7 +88,7 @@ class OrderProvider extends ChangeNotifier {
               id: '2',
               name: 'Carlos Mendes',
               email: 'carlos@email.com',
-              type: 'client',
+           //   type: 'client',
               address: 'Avenida Central',
               phone: '+258 82 123 4567',
             ),
@@ -107,7 +107,7 @@ class OrderProvider extends ChangeNotifier {
               id: '3',
               name: 'Ana Lopes',
               email: 'ana@email.com',
-              type: 'client',
+            //  type: 'client',
               address: 'Rua das Flores',
               phone: '+258 87 999 8888',
             ),

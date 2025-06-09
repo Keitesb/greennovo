@@ -1,19 +1,30 @@
+
 // lib/models/user_model.dart
 
+
 class User {
-  final String id;
-  final String name;
+  final String? id;
   final String email;
-  final String type; // 'client' ou 'supplier'
+  final String? name;
+  final String? nuit;
   final String address; // Adicione este campo
   final String phone;   // Adicione este campo
 
   User({
-    required this.id,
-    required this.name,
     required this.email,
-    required this.type,
-    required this.address, // Adicione este campo
-    required this.phone,   // Adicione este campo
+    this.id,
+   required this.name,
+    this.nuit,
+    required this.address,
+    required this.phone,
   });
+
+  factory User.fromMap(Map<String, dynamic> map) {
+    return User(
+      id: map['id'] ?? '',
+      email: map['email'] ?? '',
+      name: map['nome'],
+      nuit: map['nuit'], address: '', phone: '',
+    );
+  }
 }

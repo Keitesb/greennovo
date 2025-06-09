@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:greennovo/providers/auth_provider.dart';
+import 'package:greennovo/views/splash/splash_screen.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -11,7 +14,9 @@ class SettingsScreen extends StatelessWidget {
       _SettingsOption(icon: Icons.payment, label: "Métodos de Pagamento", onTap: () {}),
       _SettingsOption(icon: Icons.help_outline, label: "Ajuda", onTap: () {}),
       _SettingsOption(icon: Icons.logout, label: "Sair", onTap: () {
-        // Implementar logout
+       //todo logout
+        Provider.of<AuthProvider>(context,listen: false).logout();
+        Navigator.pushReplacementNamed(context, '/splash');
       }),
     ];
 

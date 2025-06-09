@@ -89,15 +89,7 @@ class LoginScreen extends StatelessWidget {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     // Simulando login bem-sucedido
-                    final user = User(
-                      id: '1234',
-                      name: 'Keite',
-                      email: _emailController.text,
-                      type: _userType.value,
-                      address: 'Endereço Exemplo', // ou _addressController.text
-                      phone: '+258 84 000 0000',   // ou _phoneController.text
-                    );
-                    authController.login(user);
+
 
                     // Navega para a tela principal apropriada
                     Navigator.pushReplacement(

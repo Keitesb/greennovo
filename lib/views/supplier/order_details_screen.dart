@@ -73,7 +73,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                       },
                       children: [
                         _row('Pedido:', order.id),
-                        _row('Cliente:', order.customer.name),
+                        _row('Cliente:', order.customer.name!),
                         _row('Data:', formattedDate),
                         _row('Endereço:', order.customer.address),
                         _row('Contacto:', order.customer.phone),

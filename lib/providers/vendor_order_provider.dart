@@ -24,7 +24,7 @@ class VendorOrderProvider extends ChangeNotifier {
       id: 'u1',
       name: 'Ana Silva',
       email: 'ana@example.com',
-      type: 'customer',
+     // type: 'customer',
       address: 'Av. das Acácias, 123',
       phone: '823456789',
     );
@@ -32,7 +32,7 @@ class VendorOrderProvider extends ChangeNotifier {
       id: 'u2',
       name: 'João Pereira',
       email: 'joao@example.com',
-      type: 'customer',
+     // type: 'customer',
       address: 'Rua do Sol, 45',
       phone: '854321098',
     );
@@ -40,7 +40,7 @@ class VendorOrderProvider extends ChangeNotifier {
       id: 'u3',
       name: 'Mariana Costa',
       email: 'mariana@example.com',
-      type: 'customer',
+     // type: 'customer',
       address: 'Travessa do Mercado, 78',
       phone: '845678912',
     );
