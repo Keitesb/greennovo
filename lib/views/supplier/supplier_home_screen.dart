@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:greennovo/providers/auth_provider.dart';
+import 'package:greennovo/views/supplier/product.dart';
 import 'package:provider/provider.dart';
 import 'package:greennovo/providers/supplier_home_controller.dart';
 import 'package:greennovo/views/supplier/product_screen.dart';
@@ -18,7 +20,7 @@ class SupplierHomeScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FA),
-      appBar: _buildAppBar(),
+      appBar: _buildAppBar(context),
       body: LayoutBuilder(
         builder: (context, constraints) {
           final horizontalPadding = isWide ? constraints.maxWidth * 0.1 : 20.0;
@@ -76,7 +78,15 @@ class SupplierHomeScreen extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
+
+  PreferredSizeWidget _buildAppBar(BuildContext context) {
+
+    final authController = Provider.of<AuthProvider>(context);
+    final userName = authController.currentUser?.name ?? '';
+    final initial = userName.isNotEmpty ? userName[0].toUpperCase() : 'G';
+    print("nome: $userName");
+
+
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 1,
@@ -94,7 +104,7 @@ class SupplierHomeScreen extends StatelessWidget {
           CircleAvatar(
             radius: 20,
             backgroundColor: Colors.grey[200],
-            child: const Text('V', style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold)),
+            child:  Text(initial, style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -194,7 +204,10 @@ class SupplierHomeScreen extends StatelessWidget {
         icon: Icons.logout,
         title: 'Sair',
         color: Colors.grey,
-        onTap: () => SystemNavigator.pop(),
+        onTap: () => {
+          Provider.of<AuthProvider>(context,listen: false).logout(),
+          Navigator.pushReplacementNamed(context, '/splash')
+        },
       ),
     ];
 

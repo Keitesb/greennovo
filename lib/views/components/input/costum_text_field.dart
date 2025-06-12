@@ -6,6 +6,7 @@ class CostumTextField extends StatefulWidget {
   final String label;
   final bool isSecret;
   final List<TextInputFormatter>? inputFormatters;
+  final TextEditingController? controller; // Novo parâmetro opcional
 
   const CostumTextField({
     super.key,
@@ -13,6 +14,7 @@ class CostumTextField extends StatefulWidget {
     required this.label,
     this.isSecret = false,
     this.inputFormatters,
+    this.controller,
   });
 
   @override
@@ -25,7 +27,6 @@ class _CostumTextFieldState extends State<CostumTextField> {
   @override
   void initState() {
     super.initState();
-
     isObscure = widget.isSecret;
   }
 
@@ -34,23 +35,23 @@ class _CostumTextFieldState extends State<CostumTextField> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
+        controller: widget.controller, // Usa o controller se for fornecido
         inputFormatters: widget.inputFormatters,
         obscureText: isObscure,
         decoration: InputDecoration(
           prefixIcon: Icon(widget.icon),
-          suffixIcon:
-              widget.isSecret
-                  ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        isObscure = !isObscure;
-                      });
-                    },
-                    icon: Icon(
-                      isObscure ? Icons.visibility : Icons.visibility_off,
-                    ),
-                  )
-                  : null,
+          suffixIcon: widget.isSecret
+              ? IconButton(
+            onPressed: () {
+              setState(() {
+                isObscure = !isObscure;
+              });
+            },
+            icon: Icon(
+              isObscure ? Icons.visibility : Icons.visibility_off,
+            ),
+          )
+              : null,
           labelText: widget.label,
           isDense: true,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(18)),
@@ -59,3 +60,4 @@ class _CostumTextFieldState extends State<CostumTextField> {
     );
   }
 }
+

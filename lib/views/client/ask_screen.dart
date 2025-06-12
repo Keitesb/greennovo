@@ -95,7 +95,7 @@ class AskScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            'MZN ${(item.price * item.quantity).toStringAsFixed(2)}',
+                            'MZN ${(item.price! * item.quantity).toStringAsFixed(2)}',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.green,

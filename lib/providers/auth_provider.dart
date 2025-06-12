@@ -1,4 +1,4 @@
-// lib/providers/auth_provider.dart
+
 import 'package:flutter/material.dart';
 import 'package:greennovo/models/user_model.dart';
 import 'package:http/http.dart' as http;
@@ -14,10 +14,13 @@ class AuthProvider extends ChangeNotifier {
     try {
 
       final bool isSupplier = email.trim().endsWith('@greengrocer.mz');
+      print("is suplier: $isSupplier");
 
       final String route = isSupplier
           ? 'https://backend-green-groocer.onrender.com/api/loginSuplier'
           : 'https://backend-green-groocer.onrender.com/api/login';
+
+      print("current route $route");
 
       final response = await http.post(
         Uri.parse(route),
@@ -26,6 +29,7 @@ class AuthProvider extends ChangeNotifier {
       );
 
       final responseData = json.decode(response.body);
+      print("login response data: ${responseData}");
 
       if (response.statusCode == 200) {
         _currentUser = User.fromMap(responseData['user']);
@@ -34,6 +38,7 @@ class AuthProvider extends ChangeNotifier {
         throw Exception(responseData['error'] ?? 'Erro no login');
       }
     } catch (e) {
+      print("${e}");
       rethrow;
     }
   }
@@ -46,6 +51,9 @@ class AuthProvider extends ChangeNotifier {
           ? 'https://backend-green-groocer.onrender.com/api/create-supplier'
           : 'https://backend-green-groocer.onrender.com/api/register';
 
+      print('current route: $route');
+      print('is Suplier: $isSupplier');
+
       final response=await http.post(
         Uri.parse(route),
         headers: {'Content-Type': 'application/json'},
@@ -55,17 +63,23 @@ class AuthProvider extends ChangeNotifier {
           'password': password,
           'phone':phone,
           'nuit':nuit,
-          'address':address
+         'adress':address
         }),
       );
 
       final responseData=json.decode(response.body);
+      print('signIn response data : $responseData');
 
       if(response.statusCode== 200){
+        print('Utilizador cadastrado com sucesso!');
         _currentUser = User.fromMap(responseData['user']);
         print('Utilizador cadastrado com sucesso!');
-      }else {
-        throw Exception(responseData['error'] ?? 'Não foi possivel registrar utilizador');
+      }else if(response.statusCode==400){
+        throw Exception( 'Utilizador encontra-se registrado!');
+      }
+      else {
+        print('Erro ao registrar utilizador');
+        throw Exception(responseData['error'] ?? 'Não foi possivel registrar utilizador!');
       }
 
     }catch(e){

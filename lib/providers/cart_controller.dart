@@ -13,13 +13,13 @@ class CartController extends ChangeNotifier {
   List<Order> get orders => _orders;
 
   double get totalPrice =>
-      _items.fold(0.0, (sum, item) => sum + (item.product.price * item.quantity));
+      _items.fold(0.0, (sum, item) => sum + (item.product.price! * item.quantity));
 
   List<CartItem> get selectedItems =>
       _items.where((item) => item.isSelected).toList();
 
   double get selectedItemsTotal =>
-      selectedItems.fold(0.0, (sum, item) => sum + (item.product.price * item.quantity));
+      selectedItems.fold(0.0, (sum, item) => sum + (item.product.price! * item.quantity));
 
   void addToCart(Product product) {
     final index = _items.indexWhere((item) => item.product.id == product.id);

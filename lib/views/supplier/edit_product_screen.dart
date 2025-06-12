@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:greennovo/models/category_model.dart';
 import 'package:provider/provider.dart';
 import 'package:greennovo/models/product_model.dart';
 import 'package:greennovo/providers/product_controller.dart';
@@ -15,7 +16,7 @@ class EditProductScreen extends StatefulWidget {
 class _EditProductScreenState extends State<EditProductScreen> {
   late TextEditingController _nameController;
   late TextEditingController _priceController;
-  late String _selectedCategory;
+  late CategoryModel _selectedCategory;
   String? _imagePath; // Para futura integração com pickers
 
   final _formKey = GlobalKey<FormState>();
@@ -25,7 +26,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     super.initState();
     _nameController = TextEditingController(text: widget.product.name);
     _priceController =
-        TextEditingController(text: widget.product.price.toStringAsFixed(2));
+        TextEditingController(text: widget.product.price?.toStringAsFixed(2));
     _selectedCategory = widget.product.category;
     _imagePath = null;
   }
@@ -54,7 +55,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       final updated = Product(
         id: widget.product.id,
         name: name,
-        price: price,
+        grossPrice: price,
         category: category,
       );
 
@@ -208,17 +209,17 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           const SizedBox(width: 16),
                           Expanded(
                             child: DropdownButtonFormField<String>(
-                              value: _selectedCategory,
+                              value: _selectedCategory.name,
                               items: allCategories
-                                  .map((c) => DropdownMenuItem(
-                                value: c,
-                                child: Text(c),
+                                  .map((category) => DropdownMenuItem(
+                                value: category.name,
+                                child: Text(category.name),
                               ))
                                   .toList(),
                               onChanged: (v) {
                                 if (v != null) {
                                   setState(() {
-                                    _selectedCategory = v;
+                                    _selectedCategory?.name = v;
                                   });
                                 }
                               },

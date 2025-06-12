@@ -20,6 +20,7 @@ class _SignInScreenState extends State<SignInScreen> {
   bool _obscurePassword = true;
 
   Future<void> _login() async {
+    print("attemp login");
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _isLoading = true);
@@ -30,12 +31,14 @@ class _SignInScreenState extends State<SignInScreen> {
         _emailController.text,
         _passwordController.text,
       );
+      print("attem login");
       Navigator.pushReplacementNamed(context, '/main');
     } catch (e) {
+      print("attem login fail: $e");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Utilizador ou senhas inválidas')),
       );
-     // printToConsole('Erro: ${e.toString()}');
+     //printToConsole('Erro: ${e.toString()}');
     } finally {
       setState(() => _isLoading = false);
     }

@@ -97,14 +97,14 @@ class CartScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  'Preço unitário: ${item.product.price.toStringAsFixed(2)} Mts',
+                                  'Preço unitário: ${item.product.price?.toStringAsFixed(2)} Mts',
                                   style: const TextStyle(
                                     color: Colors.black54,
                                   ),
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  'Subtotal: ${(item.product.price * item.quantity).toStringAsFixed(2)} Mts',
+                                  'Subtotal: ${(item.product.price! * item.quantity).toStringAsFixed(2)} Mts',
                                   style: const TextStyle(
                                     color: Colors.green,
                                     fontWeight: FontWeight.bold,

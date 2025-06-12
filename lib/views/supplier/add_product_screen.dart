@@ -1,6 +1,7 @@
 // lib/views/supplier/add_product_screen.dart
 
 import 'package:flutter/material.dart';
+import 'package:greennovo/models/category_model.dart';
 import 'package:provider/provider.dart';
 import 'package:greennovo/models/product_model.dart';
 import 'package:greennovo/providers/product_controller.dart';
@@ -16,7 +17,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
   late TextEditingController _priceController;
-  String? _selectedCategory;
+  CategoryModel? _selectedCategory;
   String? _imagePath;
 
   @override
@@ -51,7 +52,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       final newProduct = Product(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         name: name,
-        price: price,
+        grossPrice: price,
         category: category,
       );
 
@@ -205,17 +206,17 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           const SizedBox(width: 16),
                           Expanded(
                             child: DropdownButtonFormField<String>(
-                              value: _selectedCategory,
+                              value: _selectedCategory!.name,
                               items: categories
                                   .map((c) => DropdownMenuItem(
-                                value: c,
-                                child: Text(c),
+                                value: c.name,
+                                child: Text(c.name),
                               ))
                                   .toList(),
-                              onChanged: (v) {
-                                if (v != null) {
+                              onChanged: (newValue) {
+                                if (newValue != null) {
                                   setState(() {
-                                    _selectedCategory = v;
+                                    _selectedCategory?.name = newValue;
                                   });
                                 }
                               },

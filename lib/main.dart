@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:greennovo/views/auth/sign_in_screen.dart';
 import 'package:greennovo/views/splash/splash_screen.dart';
 import 'package:greennovo/views/utils/custom_colors.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +48,8 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => const AuthWrapper(),
           '/main': (context) => const MainAppScreen(),
-          '/splash':(context)=> const SplashScreen()
+          '/splash':(context)=> const SplashScreen(),
+          '/login':(context)=> const SignInScreen()
         },
       ),
     );
